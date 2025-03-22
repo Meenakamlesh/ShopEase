@@ -2,6 +2,7 @@ import { Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
 import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
+import ThankYou from "./pages/ThankYou";
 
 const App = () => {
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
@@ -40,6 +41,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ProductList addToCart={addToCart} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </div>
     </div>

@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Cart = ({ cart, setCart }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const updateQuantity = (id, amount) => {
     setCart(cart.map((item) =>
       item.id === id ? { ...item, quantity: Math.max(1, parseInt(amount)) } : item
@@ -17,6 +20,14 @@ const Cart = ({ cart, setCart }) => {
   }, [cart]);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
+
+  // Handle checkout button click
+  const handleCheckout = () => {
+    // Optionally clear the cart or perform other checkout logic here
+    setCart([]); // Clear the cart after checkout (optional)
+    localStorage.setItem("cart", JSON.stringify([])); // Update localStorage
+    navigate("/thank-you"); // Redirect to ThankYou page
+  };
 
   return (
     <motion.div
@@ -82,6 +93,7 @@ const Cart = ({ cart, setCart }) => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleCheckout} // Add onClick handler
               className="w-full mt-4 bg-gradient-to-r from-green-500 to-green-700 text-white py-3 rounded-full shadow-lg hover:from-green-600 hover:to-green-800 transition-all duration-300 text-sm sm:text-base font-semibold flex items-center justify-center"
             >
               <span>Proceed to Checkout</span>
